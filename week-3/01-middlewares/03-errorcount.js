@@ -1,6 +1,7 @@
 const request = require('supertest');
 const assert = require('assert');
 const express = require('express');
+const { nextTick } = require('process');
 
 const app = express();
 let errorCount = 0;
@@ -21,6 +22,11 @@ app.post('/user', function(req, res) {
 
 app.get('/errorCount', function(req, res) {
   res.status(200).json({ errorCount });
+});
+
+app.use((err, req, res, next)=>{
+  errorCount++;
+  res.status(404).send("Invalid Request");
 });
 
 module.exports = app;

@@ -41,6 +41,23 @@ class Calculator {
   getResult(){
     return this.result;
   }
+ 
+  calculate(string){
+    try {
+    let evalString = string.replace('/[\s]/g');
+    let Valid = /[a-z]/;
+    if(!Valid){
+      let ans = eval(evalString);
+      if(ans.isfinite()){
+       this.result = ans;
+      }
+    }else{
+      throw new Error("Not a valid string");
+    }
+    console.log(evalString);
+ } catch (error) {
+  throw new Error("Invalid answer");
+ } 
 }
-
+}
 module.exports = Calculator;
