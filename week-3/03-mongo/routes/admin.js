@@ -24,7 +24,7 @@ router.post('/courses', adminMiddleware, (req, res) => {
     // Implement course creation logic
 });
 
-app.get('/courses', adminMiddleware, async (req, res) => {
+router.get('/courses', adminMiddleware, async (req, res) => {
     // Implement fetching all courses logic
     const allCourses = await Course.find({});
     if(allCourses){
