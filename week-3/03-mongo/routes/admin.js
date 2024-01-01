@@ -11,7 +11,7 @@ router.post('/signup', (req, res) => {
     
     Admin.create({username: username, 
         password : password})
-    .then(()=>{
+    .then((data)=>{
         res.status(200).json({
             message: 'Admin created successfully'
         });
@@ -22,6 +22,22 @@ router.post('/signup', (req, res) => {
 
 router.post('/courses', adminMiddleware, (req, res) => {
     // Implement course creation logic
+    const username = req.headers.username;
+    const password = req.headers.username;
+    const title = req.body.title;
+    const description = req.body.description;
+    const price = req.body.price;
+    const imageLink = req.body.imageLink;
+
+    Course.create({username: username,
+    password: password,
+title: title,description: description, price: price, imageLink: imageLink})
+.then(()=>{
+    res.status(200).json({
+        message: 'Course Created succesfully'});
+    }).catch((err)=>{
+        res.send(err);
+});
 });
 
 router.get('/courses', adminMiddleware, async (req, res) => {
@@ -36,4 +52,4 @@ router.get('/courses', adminMiddleware, async (req, res) => {
 }
 });
 
-module.exports = router;
+module.exports =  router;

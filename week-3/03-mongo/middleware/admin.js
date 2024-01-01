@@ -14,4 +14,4 @@ async function adminMiddleware(req, res, next) {
    next();
 }
 
-module.exports = await ;
+module.exports = adminMiddleware ;

@@ -5,7 +5,7 @@ async function userMiddleware(req, res, next) {
    const username = req.headers.username;
    const password = req.headers.password;
 
-   const existingUser = await Admin.findOne({username: username,
+   const existingUser = await User.findOne({username: username,
     password: password});
  if(!existingUser){
   return res.status(400).send("User does not exists");

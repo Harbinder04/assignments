@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const userMiddleware = require("../middleware/user");
-const {User, Courses} = require("../db/index.js")
+const {User, Course} = require("../db/index.js")
 // User Routes
 router.post('/signup', (req, res) => {
     // Implement user signup logic
@@ -51,19 +51,21 @@ try{
         username: req.headers.username,
         password: req.headers.password,
     });
-    const courses = await User.find({
-        _id: {
-            "$in" : user.purchasedCourses
-        }
+    if(user){
+    const courses = await Course.find({
+        _id: { $in: user.purchasedCourses } //In the Course db on the bases of _id check in the user.purchasedCourses array where that id will same and $in return that. 
+        //find that _id in the purchasedCourses array.
     });
-    if(courses){
+    if(courses.length > 0){
     res.status(200).json(courses);
     }
     else{
-        res.send("You have no course purchased")
+        res.send("You have no course purchased");
     }
-}catch{
-    res.status(404).send("Invlaid Request.")
+}else{
+    res.status(404).send("user not found");
+}}catch(error){
+    res.status(500).send("Invlaid Server Error.")
 }
 });
 
