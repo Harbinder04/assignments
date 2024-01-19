@@ -11,8 +11,18 @@ const Assignment3 = () => {
         // Add more items as needed
     ]);
 
+    function addItem(){
+        setItems([...items, {name : 'samosa', value: 10}]);
+    }
+    
     // Your code starts here
-    const totalValue = 0;
+    const totalValue = useMemo(()=>{
+        let sum = 0;
+        items.forEach(element => {
+            sum += element.value;  
+        });
+        return sum;
+    }, [items]);
     // Your code ends here
     return (
         <div>
@@ -22,6 +32,7 @@ const Assignment3 = () => {
                 ))}
             </ul>
             <p>Total Value: {totalValue}</p>
+            <button onClick={addItem}>Add</button>
         </div>
     );
 };
